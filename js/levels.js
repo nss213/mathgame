@@ -87,6 +87,7 @@ export const WORLDS = [
   },
   {
     name: 'Two Steps',
+    uses: [0, 1], // worlds whose skills this one builds on
     icon: '🪜',
     color: '#ffb000',
     tray: 4,
@@ -115,6 +116,7 @@ export const WORLDS = [
   },
   {
     name: 'Negatives',
+    uses: [2], // worlds whose skills this one builds on
     icon: '➖',
     color: '#7b61ff',
     tray: 4,
@@ -143,6 +145,7 @@ export const WORLDS = [
   },
   {
     name: 'Both Sides',
+    uses: [2, 3], // worlds whose skills this one builds on
     icon: '⚖️',
     color: '#00a6fb',
     tray: 5,
@@ -172,6 +175,7 @@ export const WORLDS = [
   },
   {
     name: 'Parentheses',
+    uses: [2, 4], // worlds whose skills this one builds on
     icon: '🫧',
     color: '#ff6b35',
     tray: 5,
