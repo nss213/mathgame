@@ -147,7 +147,7 @@ function startTip() {
   if (S.w === 0 && S.i === 0) return `Get ${varHTML(v)} all by itself! <b>Drag</b> a move onto the equation – or just <b>tap</b> it.`;
   if (S.par === 1) return `What's stuck to ${varHTML(v)}? Pick the move that undoes it.`;
   return pickOne([
-    `Get ${varHTML(v)} alone in ${S.par} moves for ★★★.`,
+    `Free ${varHTML(v)} in ${S.par} moves for ★★★.`,
     `What's stuck to ${varHTML(v)}? Undo it one move at a time.`,
     `Peel things off ${varHTML(v)}, outside first. Best is ${S.par} moves.`,
   ]);
@@ -356,7 +356,7 @@ async function playMove(op, tile, fly) {
     sfx.good(S.combo);
     buzz(20);
     floatText(pickOne(PRAISE), rect.left + rect.width / 2, rect.top, 'good');
-    coach(sol.par === 1 ? `Almost there! One more move gets ${varHTML(v)} alone.` : `${pickOne(PRAISE)} ${sol.par} more moves to get ${varHTML(v)} alone.`, 'happy');
+    coach(sol.par === 1 ? `Almost there! One more move frees ${varHTML(v)}.` : `${pickOne(PRAISE)} ${sol.par} more moves to free ${varHTML(v)}.`, 'happy');
   } else if (op.t === 'dist' && sol && oldSol && sol.par <= oldSol.par) {
     S.combo = 0;
     sfx.good(0);
@@ -451,7 +451,7 @@ async function win() {
   sfx.win();
   buzz([30, 40, 60]);
   confetti(r.left + r.width / 2, r.top + r.height / 2, 140);
-  coach(`${varHTML(S.eq.v)} is all by itself! 🎉`, 'happy');
+  coach(`${varHTML(S.eq.v)} is free! 🎉`, 'happy');
   el.tray.innerHTML = '';
   await wait(1000);
   showWin(stars, firstClear);
@@ -466,7 +466,7 @@ function showWin(stars, firstClear) {
   const end = lastLevel(S.w, S.i);
   const worldDone = S.i === LEVELS_PER_WORLD - 1;
   el.modalCard.innerHTML = `
-    <div class="win-title">${pickOne(['Solved!', 'Nice work!', 'Awesome!', 'You did it!'])}</div>
+    <div class="win-title">${pickOne(['Solved!', 'Freedom!', 'Awesome!', 'You did it!'])}</div>
     <div class="win-answer">${varHTML(v)} = ${val}</div>
     <div class="win-stars">${[0, 1, 2].map((k) => `<span class="big-star" data-k="${k}">★</span>`).join('')}</div>
     <div class="win-sub">${S.moves} move${S.moves === 1 ? '' : 's'} · best is ${S.par}</div>
@@ -509,7 +509,7 @@ function showFinale() {
   const total = store.totalStars();
   el.modalCard.innerHTML = `
     <div class="win-title">Champion! 🏆</div>
-    <p class="finale">You solved every level. You can solve for x like a pro!</p>
+    <p class="finale">You freed <b>x</b> in every level. You can solve for x like a pro!</p>
     <div class="win-sub">★ ${total} / ${WORLDS.length * LEVELS_PER_WORLD * 3} stars</div>
     ${total < WORLDS.length * LEVELS_PER_WORLD * 3 ? '<div class="win-tip">Go back and grab any missing stars!</div>' : ''}
     <div class="modal-btns"><button class="btn primary" id="m-map">Levels</button></div>`;

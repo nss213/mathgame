@@ -184,7 +184,7 @@ export const WORLDS = [
       body: `<p><b>3(x + 2)</b> means 3 times the <b>whole</b> (x + 2). Two ways in:</p>
         <div class="demo"><div>3(x + 2) = 21</div><div class="demo-op">÷ 3 &nbsp;&nbsp;&nbsp;&nbsp; ÷ 3</div><div>x + 2 = 7</div></div>
         <p>…or use <b>Distribute</b> to turn it into 3x + 6.</p>
-        <p>Careful: subtracting 2 first doesn't work – the 2 is inside the parentheses, so it's multiplied by 3 too.</p>`,
+        <p>Careful: subtracting 2 first doesn't work – the 2 is trapped inside the bubble.</p>`,
     },
     gen(r, i) {
       const a = int(r, 2, 6);
