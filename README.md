@@ -62,8 +62,15 @@ hints lead to the stated answer, and every tray contains a correct move.
 3. The `Deploy to GitHub Pages` workflow runs the tests and publishes the
    site to `https://<user>.github.io/<repo>/`.
 
-Any other static host (Netlify, Cloudflare Pages, Vercel) also works.
-Publish the repo root as-is.
+The deploy runs `node scripts/build.mjs`, which copies the site into `_site/`
+and adds `?v=<commit>` to every CSS/JS URL (including the imports between JS
+modules) and to the service worker's cache name. Every deploy therefore
+reaches players right away instead of mixing old and new files from the
+browser cache.
+
+Other static hosts (Netlify, Cloudflare Pages, Vercel) work too: use
+`node scripts/build.mjs` as the build command and `_site` as the output
+directory.
 
 ## Code map
 
