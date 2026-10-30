@@ -26,6 +26,10 @@ The game teaches one skill: **choosing the next move**.
 - **Win screen** substitutes the answer back into the original equation to
   check it (`2·(5) + 3 = 13 → 13 = 13 ✓`).
 - A world intro card explains each new idea, with a worked example.
+- **Every level is open,** so a student can go straight to the skill they're
+  stuck on. The map marks the recommended **NEXT** level, each world lists
+  the earlier worlds it builds on, and if those haven't been tried yet the
+  intro offers a one-tap **Warm up** there first.
 
 There's no server, no accounts and no build step. Progress is saved in
 `localStorage`. The game works offline after the first visit (service worker)

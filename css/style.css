@@ -145,7 +145,6 @@ b { font-weight: 600; }
   border-radius: 22px;
   padding: 14px;
 }
-.world.locked { opacity: .55; }
 .world-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .world-icon {
   width: 46px; height: 46px; border-radius: 14px;
@@ -156,6 +155,7 @@ b { font-weight: 600; }
 .world-titles { flex: 1; }
 .world-num { font-size: 12px; opacity: .7; letter-spacing: .5px; text-transform: uppercase; }
 .world-name { font-size: 20px; font-weight: 600; }
+.world-uses { font-size: 12px; opacity: .7; margin-top: 1px; }
 .world-stars { font-weight: 600; color: var(--gold); white-space: nowrap; }
 
 .levels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
@@ -173,7 +173,12 @@ b { font-weight: 600; }
 .lvl:active { transform: translateY(4px); box-shadow: 0 1px 0 #c9c2e8; }
 .lvl.done { background: var(--wc); color: #fff; box-shadow: 0 5px 0 rgba(0,0,0,.3); }
 .lvl.current { background: var(--gold); box-shadow: 0 5px 0 #c98f00; animation: breathe 1.4s ease-in-out infinite; }
-.lvl.locked { background: rgba(255,255,255,.15); box-shadow: none; color: #fff; font-size: 18px; }
+.lvl { position: relative; }
+.lvl-next {
+  position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+  background: #fff; color: #b06d00; font-size: 10px; font-weight: 700; letter-spacing: .6px;
+  padding: 2px 7px; border-radius: 999px; box-shadow: 0 2px 0 rgba(0,0,0,.2);
+}
 .lvl-stars { font-size: 12px; letter-spacing: 1px; color: #fff6c9; text-shadow: 0 1px 0 rgba(0,0,0,.3); }
 @keyframes breathe { 50% { transform: scale(1.07); } }
 
@@ -396,6 +401,7 @@ b { font-weight: 600; }
 .check .subv { color: var(--var); font-weight: 700; }
 .tick { margin-left: .4em; animation: pop .5s cubic-bezier(.2,1.8,.4,1); }
 .finale { font-size: 18px; line-height: 1.4; }
+.intro-warn { margin-top: 12px; background: #fff3c4; color: #6b4a00; border-radius: 14px; padding: 10px 12px; font-size: 15px; line-height: 1.35; text-align: left; }
 
 .intro-badge {
   width: 72px; height: 72px; margin: -2px auto 6px;
@@ -455,5 +461,5 @@ b { font-weight: 600; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-.tile .var, .hop .var, .pending .var { color: inherit; }
+.tile .var, .hop .var, .pending .var, .demo-op .var { color: inherit; }
 .coach-text .var { color: #ffb37a; }

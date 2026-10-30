@@ -65,11 +65,20 @@ syncSound();
 
 // ---------- map ----------
 
-function unlocked(w, i) {
-  if (w === 0 && i === 0) return true;
-  if (i > 0) return store.stars(w, i - 1) > 0;
-  return store.stars(w - 1, LEVELS_PER_WORLD - 1) > 0;
-}
+// Every level is open, so a student can jump to the skill they need.
+// The map still points at a recommended next level, and a world's intro
+// suggests warming up first if the skills it builds on haven't been tried.
+
+const cleared = (w) => {
+  let n = 0;
+  for (let i = 0; i < LEVELS_PER_WORLD; i++) if (store.stars(w, i)) n++;
+  return n;
+};
+const firstUnsolved = (w) => {
+  for (let i = 0; i < LEVELS_PER_WORLD; i++) if (!store.stars(w, i)) return i;
+  return 0;
+};
+const missingSkills = (w) => (WORLDS[w].uses || []).filter((u) => !cleared(u));
 
 const starStr = (n) => '★'.repeat(n) + '☆'.repeat(3 - n);
 
@@ -77,31 +86,35 @@ function renderMap() {
   $('#map-stars').textContent = store.totalStars();
   let current = null;
   $('#worlds').innerHTML = WORLDS.map((W, w) => {
-    const open = unlocked(w, 0);
     let got = 0;
     const lv = [];
     for (let i = 0; i < LEVELS_PER_WORLD; i++) {
       const st = store.stars(w, i);
       got += st;
-      const un = unlocked(w, i);
-      const isCurrent = un && !st && !current;
+      const isCurrent = !st && !current;
       if (isCurrent) current = `${w}-${i}`;
-      lv.push(`<button class="lvl ${st ? 'done' : ''} ${isCurrent ? 'current' : ''} ${un ? '' : 'locked'}"
-        data-w="${w}" data-i="${i}" ${un ? '' : 'disabled'} aria-label="Level ${i + 1}">
-        <span class="lvl-num">${un ? i + 1 : '🔒'}</span>
+      lv.push(`<button class="lvl ${st ? 'done' : ''} ${isCurrent ? 'current' : ''}"
+        data-w="${w}" data-i="${i}" aria-label="Level ${i + 1}${isCurrent ? ', next up' : ''}">
+        ${isCurrent ? '<span class="lvl-next">NEXT</span>' : ''}
+        <span class="lvl-num">${i + 1}</span>
         ${st ? `<span class="lvl-stars">${starStr(st)}</span>` : ''}
       </button>`);
     }
-    return `<div class="world ${open ? '' : 'locked'}" style="--wc:${W.color}">
+    const uses = (W.uses || []).map((u) => WORLDS[u].name).join(' + ');
+    return `<div class="world" style="--wc:${W.color}">
       <div class="world-head">
         <span class="world-icon">${W.icon}</span>
-        <div class="world-titles"><div class="world-num">World ${w + 1}</div><div class="world-name">${W.name}</div></div>
+        <div class="world-titles">
+          <div class="world-num">World ${w + 1}</div>
+          <div class="world-name">${W.name}</div>
+          ${uses ? `<div class="world-uses">Uses ${uses}</div>` : ''}
+        </div>
         <div class="world-stars">★ ${got}/${LEVELS_PER_WORLD * 3}</div>
       </div>
       <div class="levels">${lv.join('')}</div>
     </div>`;
   }).join('');
-  $('#worlds').querySelectorAll('.lvl:not(.locked)').forEach((b) =>
+  $('#worlds').querySelectorAll('.lvl').forEach((b) =>
     b.addEventListener('click', () => { sfx.tap(); startLevel(+b.dataset.w, +b.dataset.i); }));
   const cur = $('#worlds .lvl.current');
   if (cur) requestAnimationFrame(() => cur.scrollIntoView({ block: 'center', behavior: 'smooth' }));
@@ -125,7 +138,7 @@ function startLevel(w, i, { restart = false } = {}) {
   renderAll();
   coach(startTip());
   closeModal();
-  if (i === 0 && !store.seenIntro(w)) showIntro(w);
+  if (!store.seenIntro(w)) showIntro(w);
   else maybeTutorial();
 }
 
@@ -484,7 +497,7 @@ function showWin(stars, firstClear) {
     sfx.tap();
     if (end) return showFinale();
     if (worldDone && firstClear) {
-      toast(`🎉 World ${S.w + 2} unlocked: ${WORLDS[S.w + 1].name}!`);
+      toast(`🎉 World ${S.w + 1} done! Next: ${WORLDS[S.w + 1].name}`);
       sfx.unlock();
     }
     if (worldDone) startLevel(S.w + 1, 0);
@@ -508,14 +521,22 @@ function showFinale() {
 
 // ---------- intro / tutorial ----------
 
+const styleX = (html) => html.replace(/(?<![a-z])x(?![a-z])/g, varHTML('x'));
+
 function showIntro(w) {
   const W = WORLDS[w];
+  const missing = missingSkills(w);
+  const warm = missing[0];
   el.modalCard.innerHTML = `
     <div class="intro-badge" style="--wc:${W.color}">${W.icon}</div>
     <div class="intro-world">World ${w + 1}: ${W.name}</div>
-    <div class="intro-title">${W.intro.title}</div>
-    <div class="intro-body">${W.intro.body.replace(/(?<![a-z])x(?![a-z])/g, '<i class="var">x</i>')}</div>
-    <div class="modal-btns"><button class="btn primary" id="m-go">Let's go!</button></div>`;
+    <div class="intro-title">${styleX(W.intro.title)}</div>
+    <div class="intro-body">${styleX(W.intro.body)}</div>
+    ${missing.length ? `<div class="intro-warn">This world uses skills from <b>${missing.map((u) => WORLDS[u].name).join('</b> and <b>')}</b>. Jump in, or warm up there first.</div>` : ''}
+    <div class="modal-btns">
+      ${missing.length ? `<button class="btn" id="m-warm">Warm up: ${WORLDS[warm].name}</button>` : ''}
+      <button class="btn primary" id="m-go">Let's go!</button>
+    </div>`;
   openModal();
   $('#m-go').addEventListener('click', () => {
     sfx.tap();
@@ -523,6 +544,9 @@ function showIntro(w) {
     closeModal();
     maybeTutorial();
   });
+  if (missing.length) {
+    $('#m-warm').addEventListener('click', () => { sfx.tap(); startLevel(warm, firstUnsolved(warm)); });
+  }
 }
 
 function maybeTutorial() {
