@@ -26,10 +26,8 @@ jobs:
         with:
           node-version: 22
       - run: npm test
-      - name: Collect site files
-        run: |
-          mkdir _site
-          cp -r index.html manifest.webmanifest icon.svg sw.js css js _site/
+      - name: Build site with versioned asset URLs
+        run: node scripts/build.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
       - id: deployment
