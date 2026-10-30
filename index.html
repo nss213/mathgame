@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#1b1446">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Free the X! A puzzle game for learning to solve equations one move at a time.">
+  <title>Free the X</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Serif:ital,wght@1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- HOME -->
+    <section id="screen-home" class="screen active">
+      <div class="home-inner">
+        <div class="logo" aria-hidden="true">
+          <div class="cage"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+          <div class="logo-x">x</div>
+        </div>
+        <h1 class="title">Free the <span class="x">X</span>!</h1>
+        <p class="tagline">Pick the right move. Do it to both sides.<br>Get <i class="var">x</i> all by itself.</p>
+        <button id="btn-play" class="btn big primary">Play</button>
+        <div class="home-stars"><span class="star-ico">★</span> <span id="home-stars">0</span></div>
+        <button id="btn-home-sound" class="btn ghost small">🔊 Sound on</button>
+      </div>
+    </section>
+
+    <!-- WORLD MAP -->
+    <section id="screen-map" class="screen">
+      <header class="topbar">
+        <button class="icon-btn" data-go="home" aria-label="Home">‹</button>
+        <div class="topbar-title">Choose a level</div>
+        <div class="pill"><span class="star-ico">★</span> <span id="map-stars">0</span></div>
+      </header>
+      <div id="worlds" class="worlds"></div>
+    </section>
+
+    <!-- GAME -->
+    <section id="screen-game" class="screen">
+      <header class="topbar">
+        <button class="icon-btn" id="btn-back" aria-label="Levels">‹</button>
+        <div class="topbar-title"><div id="lvl-world" class="small-cap"></div><div id="lvl-name"></div></div>
+        <button class="icon-btn" id="btn-sound" aria-label="Sound">🔊</button>
+      </header>
+
+      <div class="statbar">
+        <div class="stat"><span class="stat-label">Moves</span><span id="stat-moves" class="stat-val">0</span></div>
+        <div class="stat-stars" id="stat-stars"><span>★</span><span>★</span><span>★</span></div>
+        <div class="stat"><span class="stat-label">Best</span><span id="stat-par" class="stat-val">1</span></div>
+      </div>
+
+      <div id="history" class="history" aria-label="Your steps"></div>
+
+      <div id="dropzone" class="dropzone">
+        <div id="equation" class="equation" aria-live="polite"></div>
+        <svg class="scale" viewBox="0 0 300 60" aria-hidden="true">
+          <g id="beam">
+            <rect x="20" y="8" width="260" height="8" rx="4" class="beam" />
+            <path d="M40 16 L20 40 L60 40 Z" class="string" />
+            <path d="M260 16 L240 40 L280 40 Z" class="string" />
+            <rect x="12" y="38" width="56" height="7" rx="3.5" class="pan" />
+            <rect x="232" y="38" width="56" height="7" rx="3.5" class="pan" />
+          </g>
+          <path d="M150 12 L136 58 L164 58 Z" class="pivot" />
+        </svg>
+        <div class="drop-hint">Drop a move here — it happens to <b>both sides</b></div>
+      </div>
+
+      <div id="coach" class="coach"><div class="coach-face">🦉</div><div id="coach-text" class="coach-text"></div></div>
+
+      <div class="tray-wrap">
+        <div id="tray" class="tray"></div>
+      </div>
+
+      <footer class="actions">
+        <button id="btn-undo" class="btn action">↶ Undo</button>
+        <button id="btn-restart" class="btn action">⟲ Restart</button>
+        <button id="btn-hint" class="btn action hint">💡 Hint</button>
+      </footer>
+    </section>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-card" id="modal-card"></div>
+    </div>
+
+    <div id="finger" class="finger hidden" aria-hidden="true">👆</div>
+    <div id="toast" class="toast"></div>
+    <canvas id="confetti" aria-hidden="true"></canvas>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

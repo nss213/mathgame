@@ -1,0 +1,14 @@
+{
+  "name": "Free the X",
+  "short_name": "Free the X",
+  "description": "A puzzle game for learning to solve equations one move at a time.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1b1446",
+  "theme_color": "#1b1446",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
