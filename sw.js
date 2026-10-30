@@ -1,6 +1,8 @@
 // Offline support: network first (so updates show up right away),
 // falling back to the cached copy when there's no connection.
-// The deploy build replaces the cache name with the commit version.
+// The deploy build replaces the cache name with the commit version, so a
+// new deploy drops the old cached *files*. Player progress lives in
+// localStorage, which this never touches.
 
 const CACHE = 'free-the-x-dev';
 const ASSETS = [
