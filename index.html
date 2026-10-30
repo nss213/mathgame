@@ -23,10 +23,18 @@
     <!-- HOME -->
     <section id="screen-home" class="screen active">
       <div class="home-inner">
-        <div class="logo" aria-hidden="true">
-          <div class="cage"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
-          <div class="logo-x">x</div>
-        </div>
+        <svg class="logo" viewBox="0 0 200 150" aria-hidden="true">
+          <path d="M100 18 L84 146 L116 146 Z" class="logo-post" />
+          <g class="logo-beam">
+            <rect x="14" y="12" width="172" height="10" rx="5" class="logo-bar" />
+            <path d="M40 22 L12 100 M40 22 L68 100 M160 22 L132 100 M160 22 L188 100" class="logo-string" />
+            <rect x="8" y="98" width="64" height="9" rx="4.5" class="logo-pan" />
+            <rect x="128" y="98" width="64" height="9" rx="4.5" class="logo-pan" />
+            <text x="40" y="94" class="logo-var">x</text>
+            <text x="160" y="94" class="logo-num">7</text>
+          </g>
+          <circle cx="100" cy="17" r="8" class="logo-pivot" />
+        </svg>
         <h1 class="title">Free the <span class="x">X</span>!</h1>
         <p class="tagline">Pick the right move. Do it to both sides.<br>Get <i class="var">x</i> all by itself.</p>
         <button id="btn-play" class="btn big primary">Play</button>

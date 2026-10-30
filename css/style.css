@@ -103,24 +103,16 @@ b { font-weight: 600; }
 .tagline { margin: 0; font-size: 18px; opacity: .9; line-height: 1.4; }
 .home-stars { font-size: 22px; font-weight: 600; }
 
-.logo { position: relative; width: 140px; height: 140px; }
-.logo-x {
-  position: absolute; inset: 0;
-  display: grid; place-items: center;
-  font-size: 120px; color: var(--var); padding-bottom: 20px;
-  text-shadow: 0 6px 0 #b04a00;
-  animation: bounce 1.6s ease-in-out infinite;
-}
-.cage {
-  position: absolute; inset: 10px;
-  border: 6px solid rgba(255,255,255,.85);
-  border-radius: 24px;
-  display: flex; justify-content: space-evenly;
-  animation: cage-open 3.2s ease-in-out infinite;
-  transform-origin: top center;
-}
-.cage .bar { width: 6px; background: rgba(255,255,255,.85); border-radius: 3px; }
-@keyframes cage-open { 0%, 45% { transform: translateY(0); opacity: 1; } 65%, 85% { transform: translateY(-70px) rotate(-8deg); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+.logo { width: 190px; height: auto; overflow: visible; }
+.logo { animation: bounce 2.4s ease-in-out infinite; } /* level beam: both sides equal */
+.logo-bar { fill: #fff; }
+.logo-string { stroke: rgba(255,255,255,.7); stroke-width: 3; fill: none; }
+.logo-pan { fill: var(--gold); }
+.logo-post { fill: rgba(255,255,255,.85); }
+.logo-pivot { fill: var(--gold); }
+.logo-var, .logo-num { font-size: 46px; font-weight: 700; text-anchor: middle; }
+.logo-var { font-family: var(--var-font); font-style: italic; fill: var(--var); }
+.logo-num { font-family: var(--font); fill: #fff; }
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes wiggle { 0%, 100% { transform: rotate(0); } 10% { transform: rotate(-12deg); } 20% { transform: rotate(10deg); } 30% { transform: rotate(0); } }
 
@@ -263,7 +255,7 @@ b { font-weight: 600; }
 .equals { margin: 0 .35em; }
 .sign { margin: 0 .22em; }
 .sign.lead { margin: 0 .04em 0 0; }
-.var, .x, .logo-x { font-family: var(--var-font); font-style: italic; font-weight: 700; }
+.var, .x { font-family: var(--var-font); font-style: italic; font-weight: 700; }
 .var { color: var(--var); padding: 0 .06em 0 .02em; }
 .paren { font-weight: 400; color: #7d6fb5; margin: 0 .03em; }
 .frac {
